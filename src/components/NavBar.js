@@ -2,26 +2,48 @@ import React from "react";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import logo from "../assets/logo.png";
 import styles from "../styles/NavBar.module.css";
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <Navbar expand="md" fixed="top" className={styles.NavBar}>
       <Container>
-        <Navbar.Brand>
-          <img src={logo} height="45px" alt="logo" />
-        </Navbar.Brand>
+        <NavLink to="/" key="home">
+          <Navbar.Brand>
+            <img src={logo} height="45px" alt="logo" />
+          </Navbar.Brand>
+        </NavLink>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto text-left ">
-            <Nav.Link>
+            {/* 4) Link component is just like our  good old friend the anchor tag,  
+          but it’s used with react router to  link to a different Route instead */}
+            <NavLink
+              exact
+              className={styles.NavLink}
+              activeClassName={styles.Active}
+              to="/"
+              key="home"
+            >
               <i className="fas fa-home"></i> Home
-            </Nav.Link>
-            <Nav.Link>
+            </NavLink>
+            <NavLink
+              className={styles.NavLink}
+              activeClassName={styles.Active}
+              to="/signin"
+              key="signin"
+            >
               <i className="fas fa-sign-in-alt"></i> Sign in
-            </Nav.Link>
-            <Nav.Link>
+            </NavLink>
+            <NavLink
+              className={styles.NavLink}
+              activeClassName={styles.Active}
+              to="/signup"
+              key="signup"
+            >
               <i className="fas fa-user-plus"></i> Sign up
-            </Nav.Link>
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
