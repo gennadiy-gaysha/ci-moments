@@ -61,6 +61,7 @@ const SignUpForm = () => {
                 name="username"
                 value={username}
                 onChange={handleChange}
+                autoComplete="off" // Disable form autofill
               />
             </Form.Group>
 
@@ -79,6 +80,7 @@ const SignUpForm = () => {
                 name="password1"
                 value={password1}
                 onChange={handleChange}
+                autoComplete="off" // Disable form autofill
               />
             </Form.Group>
 
@@ -97,6 +99,7 @@ const SignUpForm = () => {
                 name="password2"
                 value={password2}
                 onChange={handleChange}
+                autoComplete="off" // Disable form autofill
               />
             </Form.Group>
 
