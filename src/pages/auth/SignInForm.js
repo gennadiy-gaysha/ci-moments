@@ -20,19 +20,13 @@ function SignInForm() {
     username: "",
     password: "",
   });
-  const [errors, setErrors] = useState();
   const { username, password } = signInData;
+
+  const [errors, setErrors] = useState({});
+
   const history = useHistory();
 
-  const handleChange = (event) => {
-    setSignInData({
-      ...signInData,
-      [event.target.name]: event.target.value,
-    });
-  };
-
   const handleSubmit = async (event) => {
-    // The preventDefault method is called within an event handler to stop the browser's default behavior associated with that event. In the context of a form submission, calling event.preventDefault() prevents the form from being submitted in the default way, which typically involves a page reload.
     event.preventDefault();
     try {
       await axios.post("/dj-rest-auth/login/", signInData);
@@ -42,13 +36,20 @@ function SignInForm() {
     }
   };
 
+  const handleChange = (event) => {
+    setSignInData({
+      ...signInData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   return (
     <Row className={styles.Row}>
       <Col className="my-auto p-0 p-md-2" md={6}>
         <Container className={`${appStyles.Content} p-4 `}>
           <h1 className={styles.Header}>sign in</h1>
 
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId="username">
               <Form.Label className="d-none">Enter Username</Form.Label>
               <Form.Control
@@ -79,7 +80,7 @@ function SignInForm() {
               />
             </Form.Group>
 
-            {errors.password?.map((message, idx) => (
+            {errors?.password?.map((message, idx) => (
               <Alert variant="warning" key={idx}>
                 {message}
               </Alert>
@@ -88,16 +89,15 @@ function SignInForm() {
             <Button
               className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
               type="submit"
-              onSubmit={handleSubmit}
             >
               Sign In
             </Button>
 
-            {errors.non_field_errors?.map((message, idx) => (
+            {/* {errors?.non_field_errors?.map((message, idx) => (
               <Alert variant="warning" key={idx} className="mt-3">
                 {message}
               </Alert>
-            ))}
+            ))} */}
           </Form>
         </Container>
         <Container className={`mt-3 ${appStyles.Content}`}>
