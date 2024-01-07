@@ -39,7 +39,7 @@ const SignUpForm = () => {
     event.preventDefault();
     try {
       await axios.post("/dj-rest-auth/registration/", signUpData);
-      history.push("/sinin");
+      history.push("/signin");
     } catch (err) {
       setErrors(err.response?.data);
     }
@@ -114,7 +114,7 @@ const SignUpForm = () => {
             </Button>
 
             {errors.non_field_errors?.map((message, idx) => (
-              <Alert variant="warning" key={idx}>
+              <Alert variant="warning" key={idx} className="mt-3">
                 {message}
               </Alert>
             ))}
