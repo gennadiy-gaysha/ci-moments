@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -14,7 +14,7 @@ import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 import axios from "axios";
-import { SetCurrentUserContext } from "../../App";
+import { useSetCurrentUser } from "../../context/CurrentUserContext";
 
 function SignInForm() {
   // Step 3: Use useContext to Consume the Context!
@@ -22,7 +22,7 @@ function SignInForm() {
   // use the use context hook and  call it with the context object
 
   // In SignInForm.js, we’ll access the setCurrentUser function to update user data upon successful sign in, so that we can show different icons in the  NavBar depending on the users logged in state.
-  const setCurrentUser = useContext(SetCurrentUserContext);
+  const setCurrentUser = useSetCurrentUser();
   const [signInData, setSignInData] = useState({
     username: "",
     password: "",

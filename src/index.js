@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
+import { CurrentUserProvider } from "./context/CurrentUserContext";
 
 ReactDOM.render(
   <React.StrictMode>
     {/* 1) Router component uses the  browser history API to keep UI  in sync with the URL. 
     It  holds all the state required, so it has to wrap around all the  other react-router library components. */}
     <Router>
-      <App />
+      <CurrentUserProvider>
+        <App />
+      </CurrentUserProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById("root")

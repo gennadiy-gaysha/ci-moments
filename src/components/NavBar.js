@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import logo from "../assets/logo.png";
 import styles from "../styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
-import { CurrentUserContext } from "../App";
+import { useCurrentUser } from "../context/CurrentUserContext";
 
 const NavBar = () => {
   // Step 3: Use useContext to Consume the Context!
@@ -11,7 +11,7 @@ const NavBar = () => {
   // use the use context hook and  call it with the context object
 
   // Display different icons whether a user is logged in or not
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useCurrentUser();
   const loggedInIcons = <>{currentUser?.username}</>;
   // below is the variable for the icon a logged out user can see
   const loggedOutIcons = (
