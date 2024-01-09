@@ -6,3 +6,6 @@ axios.defaults.baseURL =
 axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 // Allow sending credentials (like cookies) with cross-origin requests
 axios.defaults.withCredentials = true;
+
+export const axiosReq = axios.create();
+export const awiosRes = axios.create();
