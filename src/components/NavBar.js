@@ -9,6 +9,7 @@ import {
 } from "../context/CurrentUserContext";
 import Avatar from "./Avatar";
 import axios from "axios";
+import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
 const NavBar = () => {
   // Step 3: Use useContext to Consume the Context!
@@ -18,6 +19,8 @@ const NavBar = () => {
   // Display different icons whether a user is logged in or not
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
+
+  const { expanded, setExpanded, ref } = useClickOutsideToggle();
 
   const handleSignOut = async () => {
     try {
@@ -93,7 +96,12 @@ const NavBar = () => {
   );
 
   return (
-    <Navbar expand="md" fixed="top" className={styles.NavBar}>
+    <Navbar
+      expanded={expanded}
+      expand="md"
+      fixed="top"
+      className={styles.NavBar}
+    >
       <Container>
         <NavLink to="/" key="home">
           <Navbar.Brand>
@@ -102,7 +110,14 @@ const NavBar = () => {
         </NavLink>
         {/* This is a conditional rendering with the logical AND (&&) operator. It checks if currentUser is truthy, and if so, it renders the addPostIcon component. If currentUser is falsy, nothing is rendered. */}
         {currentUser && addPostIcon}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+        {/* The ref is assigned to the Navbar.Toggle element. Whenever the component renders, the ref value changes because it now points to the Navbar.Toggle. This change in the ref value would then trigger the useEffect to run due to the dependency on [ref]. */}
+        <Navbar.Toggle
+          // This will allow us to reference this DOM element and detect  whether the user clicked inside or outside of it:
+          ref={ref}
+          onClick={() => setExpanded(!expanded)}
+          aria-controls="basic-navbar-nav"
+        />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto text-left ">
             {/* 4) Link component is just like our  good old friend the anchor tag,  
