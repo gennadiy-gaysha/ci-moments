@@ -21,6 +21,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 
 function PostCreateForm() {
   const [errors, setErrors] = useState({});
+
   const [postData, setPostData] = useState({
     title: "",
     content: "",
@@ -49,14 +50,15 @@ function PostCreateForm() {
   };
 
   const handleSubmit = async (event) => {
-    event.perventDefault();
+    event.preventDefault();
     const formData = new FormData();
+
     formData.append("title", title);
     formData.append("content", content);
     formData.append("image", imageInput.current.files[0]);
 
     try {
-      const { data } = axiosReq.post("/posts/", formData);
+      const { data } = await axiosReq.post("/posts/", formData);
       history.push(`/posts/${data.id}`);
     } catch (err) {
       console.log(err);
@@ -71,13 +73,12 @@ function PostCreateForm() {
       <Form.Group>
         <Form.Label>Title</Form.Label>
         <Form.Control
-          onChange={handleChange}
+          type="text"
           name="title"
           value={title}
-          type="text"
+          onChange={handleChange}
         />
       </Form.Group>
-
       {errors?.title?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
           {message}
@@ -87,17 +88,22 @@ function PostCreateForm() {
       <Form.Group>
         <Form.Label>Content</Form.Label>
         <Form.Control
-          onChange={handleChange}
-          name="content"
-          value={content}
           as="textarea"
           rows={6}
+          name="content"
+          value={content}
+          onChange={handleChange}
         />
       </Form.Group>
+      {errors?.content?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
 
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
-        onClick={() => {}}
+        onClick={() => history.goBack()}
       >
         cancel
       </Button>
@@ -136,7 +142,7 @@ function PostCreateForm() {
                 >
                   <Asset
                     src={Upload}
-                    message="Click or tap to upload an immage"
+                    message="Click or tap to upload an image"
                   />
                 </Form.Label>
               )}
@@ -148,7 +154,6 @@ function PostCreateForm() {
                 ref={imageInput}
               />
             </Form.Group>
-
             {errors?.image?.map((message, idx) => (
               <Alert variant="warning" key={idx}>
                 {message}
