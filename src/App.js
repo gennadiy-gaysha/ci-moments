@@ -7,8 +7,13 @@ import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
 import PostCreateForm from "./pages/posts/PostCreateForm";
 import PostPage from "./pages/posts/PostPage";
+import PostsPage from "./pages/posts/PostsPage";
+import { useCurrentUser } from "./context/CurrentUserContext";
 
 function App() {
+  const currentUser = useCurrentUser();
+  const profile_id = currentUser?.profile_id || "";
+
   return (
     // Step 2: Provide the Context Value -
     // wrap the children  in the context object provider,
@@ -24,7 +29,33 @@ function App() {
         {/* 2) Switch holds all the routes and renders  the first one that matches the current url */}
         <Switch>
           {/* 3) Route renders a given component  when its path matches the current URL */}
-          <Route exact path="/" render={() => <h1>Home</h1>} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <PostsPage message="No results found. Adjust the search keyword." />
+            )}
+          />
+          <Route
+            exact
+            path="/feed"
+            render={() => (
+              <PostsPage
+                message="No results found. Adjust the search keyword or follow a user."
+                filter={`owner__followed__owner__profile=${profile_id}&`}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/liked"
+            render={() => (
+              <PostsPage
+                message="No results found. Adjust the search keyword or like a post."
+                filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`}
+              />
+            )}
+          />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route exact path="/post/create" render={() => <PostCreateForm />} />
