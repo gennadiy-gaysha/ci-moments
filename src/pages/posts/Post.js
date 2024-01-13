@@ -27,7 +27,6 @@ const Post = (props) => {
   const is_owner = currentUser?.username === owner;
 
   const handleLike = async () => {
-    console.log("Request data", { post: id });
     try {
       const { data } = await axiosRes.post("/likes/", { post: id });
       setPosts((prevPosts) => ({
@@ -40,13 +39,12 @@ const Post = (props) => {
       }));
     } catch (err) {
       console.log(err);
-      console.error("Like error", err);
-      console.log("Response data", err.response.data);
     }
   };
 
   const handleUnlike = async () => {
     try {
+      await axiosRes.delete(`/likes/${like_id}/`);
       setPosts((prevPosts) => ({
         ...prevPosts,
         results: prevPosts.results.map((post) => {

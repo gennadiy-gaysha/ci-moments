@@ -5,13 +5,11 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
 import appStyles from "../../App.module.css";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import Post from "./Post";
 
 function PostPage() {
-  // UseParams hook allows to access the parameters from the current route.
-  // The id variable is being destructured from the object returned by useParams().
   const { id } = useParams();
   const [post, setPost] = useState({ results: [] });
 
@@ -27,6 +25,7 @@ function PostPage() {
         console.log(err);
       }
     };
+
     handleMount();
   }, [id]);
 
