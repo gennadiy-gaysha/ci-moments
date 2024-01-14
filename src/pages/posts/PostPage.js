@@ -10,6 +10,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 import Post from "./Post";
 
 function PostPage() {
+  // We use useParams hook from React Router to extract a parameter named id from the current route's URL
   const { id } = useParams();
   const [post, setPost] = useState({ results: [] });
 
