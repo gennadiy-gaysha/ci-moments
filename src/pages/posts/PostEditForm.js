@@ -12,9 +12,8 @@ import styles from "../../styles/PostCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function PostEditForm() {
   const [errors, setErrors] = useState({});
@@ -41,6 +40,7 @@ function PostEditForm() {
         console.log(err);
       }
     };
+
     handleMount();
   }, [history, id]);
 
@@ -67,12 +67,13 @@ function PostEditForm() {
 
     formData.append("title", title);
     formData.append("content", content);
+
     if (imageInput?.current?.files[0]) {
       formData.append("image", imageInput.current.files[0]);
     }
 
     try {
-      await axiosReq.put(`/posts/${id}`, formData);
+      await axiosReq.put(`/posts/${id}/`, formData);
       history.push(`/posts/${id}`);
     } catch (err) {
       console.log(err);
